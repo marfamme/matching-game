@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+div{
+	position: absolute;
+	top:100px;
+	width: 500px;
+	height: 500px;
+}
+img {
+    position:absolute ;
+    left:0px;
+    top: 0px;
+   }
+#div1{
+	position:absolute;
+	border-right: solid 1px;	
+	top:100px;
+	left:0px;
+}
+
+#div2{
+	/*border-left: solid 1px;	*/
+	position:absolute; 
+	top:0px;
+	left:500px; 
+}
+</style>
+</head>
+<script type="text/javascript">
+var level=1;
+function generateSmiles(level){
+var numberOfFaces=level*5;
+for (var i = 0; i < numberOfFaces; i++) {
+	var theDiv1 = document.getElementById("div1");
+	var aSmile= document.createElement("img");
+	aSmile.src = "smile.png";
+	aSmile.style.position="absolute";
+    aSmile.style.top = parseInt(Math.random()*400)+"px";
+    aSmile.style.left = parseInt(Math.random()*400)+"px";
+    theDiv1.appendChild(aSmile.cloneNode(true));
+	}
+	var theDiv2 = document.getElementById("div2");
+	var newDiv = theDiv1.cloneNode(true);
+	theDiv2.appendChild(newDiv);
+	deleteNode();	
+	theDiv1.lastChild.onclick=function () { 
+	event.stopPropagation();
+	alert('hooray!'); 
+	deleteFaces();
+	level++;
+	generateSmiles(level) }
+	document.getElementsByTagName("body")[0].onclick=function () { deleteFaces();
+	alert('Game over!');
+	generateSmiles(1);
+	}
+
+}
+function fiveSmiles(){
+alert("oops");	
+}
+function deleteNode(){
+	var the_node = document.getElementById("div2").lastChild.lastChild;
+    the_node.parentNode.removeChild(the_node);
+    }
+
+function deleteFaces(){
+                var theNode1 = document.getElementById("div1");
+                var theNode2=document.getElementById("div2"); 
+                while (theNode1.firstChild) 
+                    theNode1.removeChild(theNode1.firstChild);
+                    theNode2.removeChild(theNode2.firstChild);     
+       }    
+</script>
+<body onload="generateSmiles(1)">
+<h1 > Match game</h1>
+<p>Click on the extra smiling face on the left.</p>
+<div id="div1" >
+</div>
+<div id="div2" ></div>
+</body>
+</html>
